@@ -80,14 +80,14 @@ public class FirstTest {
                 By.xpath("//*[contains(@resource-id, 'app.ufity.debug:id/vBottomNavigation')]//*[@class='android.widget.ImageButton']"),
                 1,
                 "Cannot find Cart element of collection",
-                10
+                15
 
         );
 
         swipeUpToFindElement(
                 By.xpath("//*[contains(@text, 'Strawberry')]"),
                 "Cannot find Strawberry ",
-                5
+                2
         );
 
         waitForElementAndClick(
@@ -97,11 +97,33 @@ public class FirstTest {
 
         );
 
-        swipeUpToFindElement(
-                By.xpath("//*[contains(@resource-id, 'app.ufity.debug:id/buy_btn')]"),
-                "Cannot find Buy now button ",
-                5
+        swipeElementToRight(
+                By.xpath("//*[contains(@resource-id, 'app.ufity.debug:id/seekBar')]"),
+                "Cannot click to Seek bar"
+
         );
+
+        swipeElementToLeft(
+                By.xpath("//*[contains(@resource-id, 'app.ufity.debug:id/seekBar')]"),
+                "Cannot click to Seek bar"
+
+        );
+
+
+        swipeUpToFindElement(
+                By.xpath("//*[contains(@resource-id,'app.ufity.debug:id/buy_btn')]"),
+                "Cannot find Buy now button ",
+                20
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@class, 'android.widget.ImageButton')]"),
+                "Cannot click to Strawberry",
+                10
+
+        );
+
+
 
     }
 
@@ -1603,6 +1625,7 @@ public class FirstTest {
         action.press(x, start_y).waitAction(timeOfSwipe).moveTo(x, end_y).release().perform();
     }
 
+
     protected void swipeUpQuick()
     {
         swipeUp(200);
@@ -1620,6 +1643,46 @@ public class FirstTest {
             ++already_swiped;
 
         }
+    }
+
+    protected void swipeElementToRight(By by, String error_message)
+    {
+        WebElement element = waitForElementPresent(
+                by,
+                error_message,
+                10);
+
+        int start = element.getLocation().getX();
+        int end = element.getSize().getWidth();
+        int y = element.getLocation().getY();
+
+        TouchAction action = new TouchAction(driver);
+        action
+                .press(start, y)
+                .moveTo(end, y)
+                .release()
+                .perform();
+
+    }
+
+    protected void swipeElementToLeft(By by, String error_message)
+    {
+        WebElement element = waitForElementPresent(
+                by,
+                error_message,
+                10);
+
+        int start = element.getLocation().getX();
+        int end = element.getSize().getWidth();
+        int y = element.getLocation().getY();
+
+        TouchAction action = new TouchAction(driver);
+        action
+                .press(start, y)
+                .moveTo(end, y)
+                .release()
+                .perform();
+
     }
 
 }
